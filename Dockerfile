@@ -1,14 +1,16 @@
 FROM golang:1.20-alpine
+ENV APP_ROOT=/opt/app-root
+ENV GOPATH=$APP_ROOT
 
-WORKDIR /app
-
-COPY go.mod ./
+WORKDIR $APP_ROOT/src/
+ADD go.mod go.sum $APP_ROOT/src/
 RUN go mod download
 
-COPY *.go ./
+# Add source code
+ADD ./ $APP_ROOT/src/
 
-RUN go build -o /webapp
+RUN CGO_ENABLED=0 go build -trimpath -o go-app ./cmd
 
 EXPOSE 8080
 
-ENTRYPOINT ["/webapp"]
+ENTRYPOINT ["./go-app"]
