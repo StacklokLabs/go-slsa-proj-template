@@ -75,7 +75,7 @@ jobs:
 
       - name: Download assets
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ATT_FILE_NAME: "${{ needs.build.outputs.go-binary-name }}.intoto.jsonl"
           ARTIFACT: ${{ needs.build.outputs.go-binary-name }}
         run: |
